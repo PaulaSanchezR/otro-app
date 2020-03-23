@@ -10,7 +10,7 @@ import GoalInput from './components/GoalInput'
 export default function App() {  
   // manage some state
 const [courseGoals, setCurseGoal] = useState([]);
-
+const [isAddMode, setIsAddMode] = useState(false)
         // another way to do it
         // function goalInputHandler(entertedText){
         //   setEnterGoal(entertedText)
@@ -33,6 +33,7 @@ const [courseGoals, setCurseGoal] = useState([]);
       // list of objects that has a key property and value property for flatList
       { id: Math.random().toString(), value: goalTitle } 
     ]);
+    setIsAddMode(false);
   };
 
   const removeGoalHandler = goalId => {
@@ -42,14 +43,22 @@ const [courseGoals, setCurseGoal] = useState([]);
       // filter a methods that  allow to create a new array
       // base on a new criteria 
       // retuirn true if the id is not equal to the id pass a parameter
+      // keep item when the id is not the same that I send
         return currentGoals.filter((goal) => goal.id !== goalId)
     })
+  }
+
+  const cancelGoalAdditionHandler =() =>{
+    setIsAddMode(false);
   }
   return (
        
       <View style={styles.screen}>
+       <Button title="Add New Goal" onPress={() => setIsAddMode(true)}></Button>
           <GoalInput 
+            visible={isAddMode}
             onAddGoal={addGoalHandler}
+            onCancel={cancelGoalAdditionHandler}
           />
      
           {/* use it when you know the amount of items
